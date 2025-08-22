@@ -1,0 +1,47 @@
+
+ToDA Field Notes
+================
+
+1. Nighttime GPS-Synced Audio Recording Script
+----------------------------------------------
+- Python script records from 22:00 EST to 05:59 EST.
+- Uses 59 min 55 sec segments with 5 sec gaps.
+- Timestamps each WAV with UTC time.
+- Logs PPS 'assert' line and chrony offset to JSON metadata.
+
+2. PPS and GPS Configuration (Direct Serial)
+--------------------------------------------
+- GPS wired to Pi GPIO (TX→GPIO15, RX→GPIO14, PPS→GPIO18).
+- /boot/config.txt:
+  enable_uart=1
+  dtoverlay=pps-gpio,gpiopin=18
+- /etc/default/gpsd:
+  DEVICES="/dev/serial0"
+  GPSD_OPTIONS="-n"
+- /etc/chrony/chrony.conf:
+  refclock SHM 0 refid GPS precision 1e-1 offset 0.5 delay 0.2
+  refclock PPS /dev/pps0 refid PPS lock GPS
+
+3. GNOME Boxes on Kubuntu
+--------------------------
+- Flatpak works fine on KDE.
+- Command:
+  sudo flatpak install flathub org.gnome.Boxes
+- Add Flatpak support in KDE Discover:
+  sudo apt install plasma-discover-backend-flatpak
+
+4. Removing Snap on Kubuntu
+----------------------------
+- Snap not installed by default in Kubuntu.
+- Remove Snap:
+  sudo apt purge snapd
+  sudo rm -rf ~/snap /snap /var/snap /var/lib/snapd
+
+5. Underground Speaker Wiring
+------------------------------
+- Use 14/2 UF solid copper cable for underground runs.
+- Transition to 14 AWG stranded copper near speaker.
+- Use waterproof butt connectors or gel-filled wire nuts.
+- Wrap in silicone + electrical tape for protection.
+
+End of Notes
